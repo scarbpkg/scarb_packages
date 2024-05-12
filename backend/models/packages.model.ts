@@ -38,6 +38,7 @@ export interface IPackage extends Document {
   installation: string;
   repository: string;
   readMe: string;
+  owner: string;
   thumbnail: object;
   usage: string;
   exampleCode: string;
@@ -45,7 +46,6 @@ export interface IPackage extends Document {
   reviews: IReview[];
   packageData: IPackageData[];
   ratings?: number;
- 
 }
 
 const reviewSchema = new Schema<IReview>(
@@ -95,6 +95,10 @@ const packageSchema = new Schema<IPackage>(
       required: true,
       unique: true,
     },
+    owner: {
+      type: String,
+      required: true,
+    },
     installation: {
       type: String,
       required: true,
@@ -115,12 +119,12 @@ const packageSchema = new Schema<IPackage>(
     },
     exampleCode: {
       type: String,
-    }
+    },
   },
   { timestamps: true }
 );
 
-packageSchema.index({packageName: 'text'})
+packageSchema.index({ packageName: "text" });
 
 const PackageModel: Model<IPackage> = mongoose.model("Package", packageSchema);
 
