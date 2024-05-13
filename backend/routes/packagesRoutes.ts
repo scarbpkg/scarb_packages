@@ -6,6 +6,7 @@ import {
 //   getPackageByPublisher, //TODO
   searchPackages,
   uploadPackage,
+  getNumberOfPackages,
 } from "../controllers/packagesController";
 // import { authorizeRoles, isAutheticated } from "../middleware/auth";
 
@@ -17,6 +18,7 @@ packageRouter.post(
 );
 
 packageRouter.get("/search", searchPackages);
+
 
 
 packageRouter.get(
@@ -31,6 +33,9 @@ packageRouter.put(
 
 
 packageRouter.get("/", getAllPackages);
+
+packageRouter.get("/number-of-packages", getNumberOfPackages);
+
 
 
 export default packageRouter;

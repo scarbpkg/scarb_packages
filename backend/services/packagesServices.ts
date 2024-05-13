@@ -20,5 +20,15 @@ export const getAllPackagesService = async (res: Response) => {
   res.status(200).json({
     success: true,
     packages,
+    length: packages.length
+  });
+};
+
+export const getNumberOfPackagesService = async (res: Response) => {
+  const packages = await packageModel.find();
+
+  res.status(200).json({
+    success: true,
+    length: packages.length
   });
 };
