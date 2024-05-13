@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { catchAsyncError } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import cloudinary from "cloudinary";
-import { createPackage, getAllPackagesService } from "../services/packagesServices";
+import {
+  createPackage,
+  getAllPackagesService,
+  getNumberOfPackagesService
+} from "../services/packagesServices";
 import { redis } from "../utils/redis";
 import mongoose from "mongoose";
 import path from "path";
@@ -65,7 +69,7 @@ export const editPackage = catchAsyncError(
 
       const packageId = req.params.id;
 
-      const packageData = await PackageModel.findById(packageId) as any;
+      const packageData = (await PackageModel.findById(packageId)) as any;
 
       if (thumbnail && !thumbnail.startsWith("https")) {
         await cloudinary.v2.uploader.destroy(packageData.thumbnail.public_id);
@@ -120,9 +124,7 @@ export const getSinglePackage = catchAsyncError(
           packaged,
         });
       } else {
-        const packaged = await PackageModel.findById(req.params.id).select(
-          "-packageata.videoUrl -packageData.suggestion -packageData.questions -packageData.links"
-        );
+        const packaged = await PackageModel.findById(req.params.id);
 
         await redis.set(packageId, JSON.stringify(packaged), "EX", 604800); // 7days
 
@@ -137,24 +139,25 @@ export const getSinglePackage = catchAsyncError(
   }
 );
 
-// search for a package 
+// search for a package
 export const searchPackages = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       // Get query parameters for filtering
       const { packageName } = req.query;
-    
+
       // Perform the search operation in MongoDB
-      const results = await PackageModel.find({packageName: {$regex : packageName}});
-  
+      const results = await PackageModel.find({
+        packageName: { $regex: packageName },
+      });
+
       // Return the search results
       res.status(200).json(results);
     } catch (error) {
-      res.status(500).json({ error: 'An error occurred while searching' });
+      res.status(500).json({ error: "An error occurred while searching" });
     }
   }
 );
-
 
 // get all Packages --- only for admin
 export const getAllPackages = catchAsyncError(
@@ -162,6 +165,18 @@ export const getAllPackages = catchAsyncError(
     try {
       getAllPackagesService(res);
     } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+export const getNumberOfPackages = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getNumberOfPackagesService(res);
+        }
+  
+     catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
   }
@@ -192,4 +207,3 @@ export const deletePackage = catchAsyncError(
     }
   }
 );
-
