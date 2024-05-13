@@ -54,11 +54,11 @@ export default function Home() {
           )}
         </div>
       </nav>
-      <div className="bg-[#4d4dff] gradient w-full">
+      <div className="bg-[#292277] gradient w-full">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight leading-relaxed text-white/80 sm:text-6xl">
-              Build amazing Cairo dApps with scarb packages
+              Build amazing Cairo and Starknet dApps with scarb packages
             </h1>
             <p className="mt-6 text-lg leading-8 text-white">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas
