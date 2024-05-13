@@ -33,5 +33,5 @@ body {
 }
 
 .gradient {
-  background-image: linear-gradient(to bottom right, #4d4dff, #ff66cc);
+background-image: linear-gradient(to right top, #1d6650, #007375, #007da6, #0081d6, #007bf2, #5378f4, #7874f3, #976ff0, #757bf1, #5384ed, #338ae4, #1a8ed8);
 }

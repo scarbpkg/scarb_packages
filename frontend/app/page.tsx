@@ -11,10 +11,11 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const owner = "keep-starknet-strange";
   const repo = "art-peace";
+  const fetcher = (...args) => fetch(...args).then(res => res.json());
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`backendapi?searchTerm=${searchTerm}`);
+      const response = await fetch(`localhost:8000/api/v1/?searchTerm=${searchTerm}`);
       const data = await response.json();
       setSearchResults(data);
     } catch (err) {
