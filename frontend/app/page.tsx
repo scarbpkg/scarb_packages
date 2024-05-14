@@ -15,7 +15,7 @@ export default function Home() {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`localhost:8000/api/v1/?searchTerm=${searchTerm}`);
+      const response = await fetch(`http://localhost:8000/api/v1/packages/search?packageName=${searchTerm.toLowerCase()}`);
       const data = await response.json();
       setSearchResults(data);
     } catch (err) {
