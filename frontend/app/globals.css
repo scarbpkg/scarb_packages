@@ -35,3 +35,7 @@ body {
 .gradient {
 background-image: linear-gradient(to right top, #1d6650, #007375, #007da6, #0081d6, #007bf2, #5378f4, #7874f3, #976ff0, #757bf1, #5384ed, #338ae4, #1a8ed8);
 }
+.shadow {
+  box-shadow: 0 4px 13px -3px rgba(0, 0, 0, 0.10196);
+  border-bottom: 1px solid #d2d2d2;
+}

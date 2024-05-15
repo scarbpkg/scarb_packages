@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
-const ReadmeViewer = ({ owner, repo }) => {
+const ReadmeViewer = ({ owner, packageData }) => {
   const [readmeContent, setReadmeContent] = useState('');
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log('package data is => ', packageData);
+    if (!packageData) return;
+    const repo = packageData.repository.split('/').pop().split('.')[0]
     const fetchReadme = async () => {
       const url = `https://api.github.com/repos/${owner}/${repo}/readme`;
 
@@ -32,7 +35,7 @@ const ReadmeViewer = ({ owner, repo }) => {
     };
 
     fetchReadme();
-  }, [owner, repo]); // Re-run when owner or repo changes
+  }, [owner, packageData]); // Re-run when owner or repo changes
 
   if (error) {
     return <div>Error: {error}</div>;

@@ -1,60 +1,10 @@
 "use client";
 
-import LogoIcon from "@/components/UI/iconsComponents/icons/logo";
-import ReadmeViewer from "@/components/ReadmeViewer";
-import { useState } from "react";
 import "globals";
-import "github-markdown-css";
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const owner = "keep-starknet-strange";
-  const repo = "art-peace";
-  const fetcher = (...args) => fetch(...args).then(res => res.json());
-  const handleSearch = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`http://localhost:8000/api/v1/packages/search?packageName=${searchTerm.toLowerCase()}`);
-      const data = await response.json();
-      setSearchResults(data);
-    } catch (err) {
-      console.error("Error fetching data: ", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+
   return (
     <main className="flex min-h-screen text-black flex-col items-center w-full mx-auto">
-      <nav className="flex items-center py-6 gap-3 md:gap-8 w-full max-w-7xl mx-auto px-4">
-        <div className="w-20">
-          <LogoIcon />
-        </div>
-        <div className="flex flex-1">
-          <input
-            type="text"
-            value={searchTerm}
-            className="w-full border p-2"
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Enter package name"
-          />
-          <button
-            className="bg-black text-white px-6 text-sm"
-            onClick={handleSearch}
-            disabled={loading}
-          >
-            Search
-          </button>
-          {loading && <p>Loading...</p>}
-          {searchResults.length > 0 && (
-            <ul>
-              {searchResults.map((result, index) => (
-                <li key={index}>{result}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </nav>
       <div className="bg-[#292277] gradient w-full">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
@@ -84,9 +34,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="container">
-        <ReadmeViewer owner={owner} repo={repo} />
       </div>
     </main>
   );
