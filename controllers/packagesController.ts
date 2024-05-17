@@ -7,7 +7,7 @@ import {
   getAllPackagesService,
   getNumberOfPackagesService
 } from "../services/packagesServices";
-import { redis } from "../utils/redis";
+import { redis } from "../redis";
 import mongoose from "mongoose";
 import path from "path";
 import ejs from "ejs";
