@@ -5,9 +5,9 @@ import { useState } from "react";
 import LogoIcon from "@/components/UI/iconsComponents/icons/logo";
 import "globals";
 import Link from "next/link";
-const CustomNav = (props) => {
+const CustomNav = (props: any) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [noResults, setNoResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [packageData, setPackageData] = useState(null);
@@ -20,7 +20,6 @@ const CustomNav = (props) => {
         `http://localhost:8000/api/v1/packages/search?packageName=${searchTerm.toLowerCase()}`
       );
       const data = await response.json();
-      console.log(data);
       if (data.length) {
         setSearchResults(data);
         setShowDropdown(true);
@@ -35,7 +34,7 @@ const CustomNav = (props) => {
     }
   };
 
-  const savePackageData = (data) => {
+  const savePackageData = (data: any) => {
     setPackageData(data);
     props.handleChange(data);
     setShowDropdown(false);
@@ -65,7 +64,7 @@ const CustomNav = (props) => {
                       key={index}
                       className="cursor-pointer"
                     >
-                      {result.packageName}
+                      {result.packageName }
                     </li>
                   ))}
                 </ul>

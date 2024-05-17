@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 export const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { rateLimit } from "express-rate-limit"
 require("dotenv").config();
 import { ErrorMiddleware } from "./middleware/error";
 // import userRouter from "./routes/userRoutes";
@@ -20,6 +21,15 @@ app.use(
     credentials: true,
   })
 );
+
+// api requests limit
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000,
+	max: 100, 
+	standardHeaders: 'draft-7', 
+	legacyHeaders: false, 
+})
+
 //Routes
 // app.use("/api/v1/", userRouter);
 app.use("/api/v1/packages", packageRouter);
@@ -40,4 +50,6 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(err);
 });
 
+// middleware calls
+app.use(limiter);
 app.use(ErrorMiddleware);

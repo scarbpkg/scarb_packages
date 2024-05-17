@@ -3,8 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
-const ReadmeViewer = ({ owner, packageData }) => {
-  const [readmeContent, setReadmeContent] = useState('');
+interface Props {
+  owner: string;
+  packageData: any; 
+}
+
+const ReadmeViewer = ({ owner, packageData }: Props) => {
+  const [readmeContent, setReadmeContent] = useState<string | null>(null)
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -26,10 +31,10 @@ const ReadmeViewer = ({ owner, packageData }) => {
         const parsedMarkdown = marked(decodedContent);
 
         // Sanitize the parsed Markdown to prevent XSS attacks
-        const sanitizedHTML = DOMPurify.sanitize(parsedMarkdown);
+        const sanitizedHTML = DOMPurify.sanitize(parsedMarkdown as any);
 
         setReadmeContent(sanitizedHTML);
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
       }
     };
@@ -42,7 +47,7 @@ const ReadmeViewer = ({ owner, packageData }) => {
   }
 
   return (
-    <div className="markdown-body" dangerouslySetInnerHTML={{ __html: readmeContent }} />
+    <div className="markdown-body" dangerouslySetInnerHTML={{ __html: readmeContent as any }} />
   );
 };
 
